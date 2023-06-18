@@ -1,10 +1,14 @@
 package hello.hellospring;
 
+import hello.hellospring.repository.JdbcMemberRepository;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import hello.hellospring.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.sql.DataSource;
 
 /**
  * Spring Bean으로 등록하는 방법
@@ -15,6 +19,13 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class SpringConfig {
+    private DataSource dataSource;
+
+    @Autowired
+    public SpringConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Bean
     public MemberService memberService() {
         return new MemberService(memberRepository());
@@ -22,6 +33,13 @@ public class SpringConfig {
 
     @Bean
     public MemberRepository memberRepository() {
-        return new MemoryMemberRepository();
+        /**
+         * 개방-폐쇄 원칙 (OCP)
+         * - 확장에는 열려있고, 수정/변경에는 열려있다
+         *
+         * -> 스프링의 DI을 사용하면 기존코드를 전혀 손대지 않고, 설정만으로 구현 클래스를 변경 할 수 있다.
+         */
+//        return new MemoryMemberRepository();
+        return new JdbcMemberRepository(dataSource);
     }
 }
