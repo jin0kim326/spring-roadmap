@@ -53,7 +53,7 @@ class MemberServiceTest {
 
         // when
         memberService.join(member1);
-        
+
         // then
         assertThatThrownBy(() -> memberService.join(member2)).isInstanceOf(IllegalStateException.class);
     }
