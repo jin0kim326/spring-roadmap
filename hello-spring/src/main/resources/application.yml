@@ -1,8 +1,8 @@
 server:
   port: 8091
 
-spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/study?currentSchema=spring-basic
-    username: jin0kim326
+#spring:
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/study?currentSchema=spring-basic
+#    username: jin0kim326
