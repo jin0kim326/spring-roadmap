@@ -1,5 +1,6 @@
 package hello.hellospring.config;
 
+import hello.hellospring.aop.TimeTraceAop;
 import hello.hellospring.repository.JdbcMemberRepository;
 import hello.hellospring.repository.JdbcTemplateMemberRepository;
 import hello.hellospring.repository.JpaMemberRepository;
@@ -28,17 +29,6 @@ public class SpringConfig {
     public SpringConfig(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
-
-    //    private final DataSource dataSource;
-//    private EntityManager em;
-//
-//    public SpringConfig(EntityManager em) {
-//        this.em = em;
-//    }
-
-//    public SpringConfig(DataSource dataSource) {
-//        this.dataSource = dataSource;
-//    }
 
     @Bean
     public MemberService memberService() {
