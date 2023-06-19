@@ -6,3 +6,9 @@ server:
 #    driver-class-name: org.postgresql.Driver
 #    url: jdbc:postgresql://localhost:5432/study?currentSchema=spring-basic
 #    username: jin0kim326
+
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
