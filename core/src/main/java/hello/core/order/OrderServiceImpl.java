@@ -8,8 +8,6 @@ import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService {
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
-
     /**
      * 고정할인 정책 -> 정률할인 정책
      * 할인 정책을 변경하기 위해 클라이언트 코드를 고쳐야함.
@@ -30,9 +28,20 @@ public class OrderServiceImpl implements OrderService {
      * 구현갹체가 없기때문에 NullPoint Exception 발생...
      *
      * 해결방안 -> 누군가가 클라이언트(OrderServiceImpl)에 DiscountPolicy의 구현객체를 대신 생성,주입 해주어야함
+     *
+     * 🔥 AppConfig 등장 🔥
+     * -> 애플리케이션 전체 동작 방식을 구성
+     *
+     * private DiscountPolicy discountPolicy;
      */
-    private DiscountPolicy discountPolicy;
 
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {

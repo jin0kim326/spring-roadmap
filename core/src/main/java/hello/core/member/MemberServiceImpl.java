@@ -6,7 +6,11 @@ public class MemberServiceImpl implements MemberService {
      * MemoryMemberRepository 구현체 의존
      * 추상화/구체화 둘다에 의존 -> DIP 위반
      */
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository;
+
+    public MemberServiceImpl(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     @Override
     public void join(Member member) {
