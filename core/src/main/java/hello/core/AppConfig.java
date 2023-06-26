@@ -33,5 +33,9 @@ public class AppConfig {
 //        return new FixDifscountPolicy();         //구현
         return new RateDiscountPolicy();
     }
-
 }
+
+/**
+ * 빈 이름 : 빈이름은 기본으로 메서드 명을 사용함. @Bean(name="xxxxx")로 직접 부여가능
+ * -> 빈 이름은 항상 다른 이름을 부여!!
+ */
