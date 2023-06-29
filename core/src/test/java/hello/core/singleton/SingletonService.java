@@ -18,6 +18,12 @@ package hello.core.singleton;
  *  스프링(싱글톤 컨테이너)는 이 싱글톤의 단점을 모두 해결
  *
  *  참고 : 스프링의 기본 빈 등록방식은 싱글톤이지만, 요청마다 새로운 객체를 생성해서 반환하는 기능도 제공 (빈 스코프) - 99% 싱글톤을 사용
+ *
+ *  🔥 싱글톤 방식의 주의점
+ *   싱글톤 같은 객체 인스턴스를 하나만 생성해서 공유하는 방식은 상태를 유지하게 설계하면 안됨 -> 무상태(stateless)로 설계
+ *   - 특정 클라이언트에 의존적인 필드가 있으면 안됨
+ *   - 특정 클라이언트가 값을 변경할 수 있는 필드가 있으면 안됨
+ *   - 가급적 읽기만 가능
  */
 public class SingletonService {
     private static final SingletonService instance = new SingletonService();    //static영역에 singletonService가 하나만 딱 올라감
