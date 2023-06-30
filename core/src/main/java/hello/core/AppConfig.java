@@ -11,20 +11,37 @@ import hello.core.order.OrderServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @Bean MemberSerivce -> new MemoryMemberRepository()
+ * @Bean OrderService -> new MemoryMemberRepository()
+ *
+ * 각각 다른 2개의 MemoryMemberRepository가 생성되면서 싱글톤이 깨지는 것 처럼 보인다.
+ *
+ * 🔥 그치만 실제로 프로젝트를 구동해보면 memberRepository()는 한번만 호출된다. -... 스프링은 어떻게해서든 싱글톤을 보장하는구나..
+ *
+ * @Configuration과 바이트코드 조작의 마법🪄
+ * 내가 등록한 Appconfig말고 스프링이 AppConfig@CGLIB라는 임의의 다른클래스를 등록
+ *
+ * @Configuration을 제외시키고 @Bean만 있으면?
+ * => 진짜 자바코드인 new가 다 각각 실행됨.
+ */
 @Configuration
 public class AppConfig {
     @Bean
     public MemberService memberService() {
         /* 생성자 주입 */
+        System.out.println("AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());       //역할
     }
     @Bean
     public OrderService orderService() {
+        System.out.println("AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), discountPolicy());//역할
     }
 
     @Bean
     public MemoryMemberRepository memberRepository() {
+        System.out.println("AppConfig.memberRepository");
         return new MemoryMemberRepository();        // 구현
     }
 
