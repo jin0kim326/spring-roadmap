@@ -9,6 +9,37 @@ import hello.core.member.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * 스프링의 라이프 사이클 크게 두가지!
+ * 1. 스프링 빈 등록
+ * 2. 의존관계 주입 (설정)
+ *
+ * 생성자 주입방법 4가지
+ * 1. 생성자
+ * 2. 수정자(Setter)
+ * 3. 필드 주입
+ * 4. 일반 메서드
+ *
+ * <1. 생성자 주입>
+ * -> 생성자를 통해서 의존관계를 주입
+ *  - 생성자 호출시점에 딱 1번만 호출
+ *  - 불변,필수 의존관계에 사용
+ *  🔥 생성자는 자바코드이기 때문에 스프링 빈을 등록하면서 주입을 하게됨 (라이프사이클에서 예외적인 상황)
+ *
+ *  <2. 수정자(Setter) 주입>
+ * -> setter를 통해 의존관계 주입
+ * -> 선택, 변경 가능성이 있는 의존관계 주입 (required=false)
+ *
+ * <3. 필드 주입 >
+ * -이름그대로 필드에 바로 주입 / 코드가 간결함
+ * - 사용하지말자 ! (단위테스트 불가, 즉 DI컨테이너가 없으면 아무것도 못함)
+ *
+ * <4. 일반 메서드 주입>
+ * -> 한번에 여러 필드를 주입 받을 수 있음 (잘안씀)
+ *
+ * 💡💡 의존관계 자동 주입은 스프링 컨테이너가 관리하는 스프링 빈이어야 동작함 💡💡
+ * -> 스프링 빈이 아닌 Member클래스 안에서 @Autowired같은것들은 동작하지 않는다!!
+ */
 @Component
 public class OrderServiceImpl implements OrderService {
     private final MemberRepository memberRepository;

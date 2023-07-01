@@ -1,5 +1,8 @@
 package hello.core;
 
+import hello.core.member.MemberRepository;
+import hello.core.member.MemoryMemberRepository;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
@@ -22,6 +25,15 @@ import org.springframework.context.annotation.FilterType;
  * 지정하지않으면 -> 해당 어노테이션이 붙어있는 클래스의 위치부터
  *
  * 💡 권장방법 : 패키지 위치 지정X, 설정 정보 클래스의 위치를 프로젝트 최상단에 위치시킴 (스프링부트도 이와같은 방식을 기본제공)
+ *
+ * ------------------------------------------------------------------------------------------
+ *
+ * 컴포넌트 스캔에서 중복등록&충돌
+ *
+ * 같은빈 이름을 등록하는 경우
+ * 1. 자동 빈 등록 vs 자동 빈 등록 (빈이름이 같은경우) - ConflictingBeanDefinitionException 발생확률적음..
+ * 2. 수동 빈 등록 vs 자동 빈 등록
+ *
  */
 @Configuration
 @ComponentScan (
@@ -30,4 +42,13 @@ import org.springframework.context.annotation.FilterType;
 )
 public class AutoAppConfig {
 
+    /**
+     * 자동빈이 등록되어있는데, 컨피그에 또 등록하는 경우
+     * 수동빈으로 오버라이딩 된다.
+     * 그러나 스프링부트로 실행하면 오류가 터짐 (애매한 버그라, 스프링부트에서는 디폴트로 오류 처리)
+     */
+//    @Bean(name = "memoryMemberRepository")
+//    MemberRepository memberRepository() {
+//        return new MemoryMemberRepository();
+//    }
 }
