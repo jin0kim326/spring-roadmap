@@ -42,7 +42,7 @@ public class ApplicationContextBasicFindTest {
     @DisplayName("빈 이름으로 조회 X")
     public void findBeanByNameX() throws Exception {
 //        MemberService memberService = ac.getBean("xxxxxxx", MemberService.class);
-        assertThatThrownBy(() -> ac.getBean("memberService", MemberService.class)).isInstanceOf(NoSuchBeanDefinitionException.class);
+        assertThatThrownBy(() -> ac.getBean("memberService2", MemberService.class)).isInstanceOf(NoSuchBeanDefinitionException.class);
     }
 
 
