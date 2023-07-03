@@ -8,7 +8,7 @@ import java.io.IOException;
 public class FileCorruptionExample {
     public static void main(String[] args) {
         // 손상시킬 이미지 파일 경로
-        String imagePath = "/Users/jinyoung_1_2/[test-file]/pdf1.pdf";
+        String imagePath = "/Users/jinyoung_1_2/[test-file]/movie.mov";
 
         // 이미지 파일을 읽어옴
         try (FileInputStream fis = new FileInputStream(imagePath)) {
@@ -17,7 +17,7 @@ public class FileCorruptionExample {
             byte[] corruptedData = corruptImageData(imageData);
 
             // 손상된 이미지 파일로 저장
-            String corruptedImagePath = "/Users/jinyoung_1_2/[test-file]/pdf_destroyed.pdf";
+            String corruptedImagePath = "/Users/jinyoung_1_2/[test-file]/movie_destroyed.mov";
             try (FileOutputStream fos = new FileOutputStream(corruptedImagePath)) {
                 fos.write(corruptedData);
                 System.out.println("손상된 이미지 파일이 생성되었습니다.");
