@@ -1,8 +1,5 @@
 package hello.core.lifecycle;
 
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
-
 /**
  * 생성자를 통해 객체가 생성될때 connect를 호출하도록 되어있음
  * 객체가 생성될때 url이 없기때문에 오류가 날 것이다.
@@ -16,12 +13,21 @@ import org.springframework.beans.factory.InitializingBean;
  * 6. 소멸전 콜백
  * 7. 스프링 종료
  *
- * 초기화,소멸 인터페이스의 단점
+ * <1> 초기화,소멸 인터페이스의 단점
  * -> 스프링 전용 인터페이스 (스프링에 의존)
  * -> 메서드명 변경 불가
  * -> 외부 라이브러리 적용 불가 (코드수정이 안되기때문에)
+ *
+ * <2> 빈 등록 초기화,소멸 메서드
+ * -> 메서드 이름 작성 가능
+ * -> 스프링 빈 의존X
+ * -> 외부 라이브러리에도 초기화,종료 메서드를 적용가능
+ * +@Bean의 destoryMethod 속성의 아주 특별한 기능 - 라이브러리는 대부분 close,shutdown 이라는 이름의 종료메서드 사용
+ *  @Bean의 destroyeMethod는 기본값이 "(inferred)"로 등록되어 있다. inferred=추론
+ *
+ *
  */
-public class NetworkClient implements InitializingBean, DisposableBean {
+public class NetworkClient {
     private String url;
 
     public NetworkClient() {
@@ -46,14 +52,12 @@ public class NetworkClient implements InitializingBean, DisposableBean {
         System.out.println("disconnect: " + url);
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
+    public void init() {
         connect();
         call("초기화 연결 메세지");
     }
 
-    @Override
-    public void destroy() throws Exception {
+    public void close() {
         disconnect();
     }
 }
