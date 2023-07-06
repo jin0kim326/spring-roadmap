@@ -1,5 +1,8 @@
 package hello.core.lifecycle;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
 /**
  * 생성자를 통해 객체가 생성될때 connect를 호출하도록 되어있음
  * 객체가 생성될때 url이 없기때문에 오류가 날 것이다.
@@ -25,7 +28,13 @@ package hello.core.lifecycle;
  * +@Bean의 destoryMethod 속성의 아주 특별한 기능 - 라이브러리는 대부분 close,shutdown 이라는 이름의 종료메서드 사용
  *  @Bean의 destroyeMethod는 기본값이 "(inferred)"로 등록되어 있다. inferred=추론
  *
+ * <3> @PostConstruct, @PreDestory 특징
+ * - 최신 스프링 가장 권장방법 (편리함)
+ * - 스프링 종속 기술이 아니라, 자바에서도 사용가능
+ * - 컴포넌트 스캔과 잘 어울림
+ * - 유일한 단점 : 외부라이브러리에 적용 불가
  *
+ * 💡 3번을 기본사용, 외부라이브러리사용시 2번사용
  */
 public class NetworkClient {
     private String url;
@@ -52,11 +61,13 @@ public class NetworkClient {
         System.out.println("disconnect: " + url);
     }
 
+    @PostConstruct
     public void init() {
         connect();
         call("초기화 연결 메세지");
     }
 
+    @PreDestroy
     public void close() {
         disconnect();
     }
