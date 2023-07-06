@@ -1,5 +1,8 @@
 package hello.core.lifecycle;
 
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+
 /**
  * 생성자를 통해 객체가 생성될때 connect를 호출하도록 되어있음
  * 객체가 생성될때 url이 없기때문에 오류가 날 것이다.
@@ -12,14 +15,17 @@ package hello.core.lifecycle;
  * 5. 사용
  * 6. 소멸전 콜백
  * 7. 스프링 종료
+ *
+ * 초기화,소멸 인터페이스의 단점
+ * -> 스프링 전용 인터페이스 (스프링에 의존)
+ * -> 메서드명 변경 불가
+ * -> 외부 라이브러리 적용 불가 (코드수정이 안되기때문에)
  */
-public class NetworkClient {
+public class NetworkClient implements InitializingBean, DisposableBean {
     private String url;
 
     public NetworkClient() {
         System.out.println("생성자 호출 = " + url);
-        connect();
-        call("초기화 연결 메세지");
     }
 
     public void setUrl(String url) {
@@ -38,5 +44,16 @@ public class NetworkClient {
     // 서비스 종료시 호출
     public void disconnect() {
         System.out.println("disconnect: " + url);
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        connect();
+        call("초기화 연결 메세지");
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        disconnect();
     }
 }
